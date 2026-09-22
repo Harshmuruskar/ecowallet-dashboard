@@ -51,7 +51,7 @@ function AuthPage() {
     else if (!result.redirected) navigate({ to: "/" });
   }
 
-  return <main className="grid min-h-screen place-items-center bg-background px-4 py-10">
+  return <main className="grid min-h-screen place-items-center bg-transparent px-4 py-10">
     <div className="w-full max-w-md">
       <LinkLogo />
       <section className="eco-card mt-7 p-6 sm:p-8">
@@ -62,7 +62,7 @@ function AuthPage() {
           {signup && <div className="space-y-2"><Label htmlFor="name">Display name</Label><div className="relative"><UserRound className="absolute left-3 top-3 size-4 text-muted-foreground"/><Input id="name" value={name} onChange={e => setName(e.target.value)} className="pl-10" placeholder="Sarah" required /></div></div>}
           <div className="space-y-2"><Label htmlFor="email">Email</Label><div className="relative"><Mail className="absolute left-3 top-3 size-4 text-muted-foreground"/><Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} className="pl-10" placeholder="you@example.com" required /></div></div>
           <div className="space-y-2"><Label htmlFor="password">Password</Label><div className="relative"><LockKeyhole className="absolute left-3 top-3 size-4 text-muted-foreground"/><Input id="password" type="password" minLength={6} value={password} onChange={e => setPassword(e.target.value)} className="pl-10" placeholder="At least 6 characters" required /></div></div>
-          {message && <p className="rounded-lg bg-background p-3 text-xs text-muted-foreground" role="status">{message}</p>}
+          {message && <p className="glass-inset rounded-lg p-3 text-xs text-foreground" role="status">{message}</p>}
           <Button className="w-full" size="lg" disabled={busy}>{busy ? "Please wait…" : signup ? "Create Account" : "Sign In"}</Button>
         </form>
         <div className="my-5 flex items-center gap-3 text-[10px] uppercase text-muted-foreground"><span className="h-px flex-1 bg-border"/>or<span className="h-px flex-1 bg-border"/></div>
