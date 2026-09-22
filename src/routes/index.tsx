@@ -43,13 +43,13 @@ const monthly = [
 ];
 
 function Sidebar({ open, close }: { open: boolean; close: () => void }) {
-  return <aside className={`${open ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-40 flex w-[220px] flex-col border-r border-border bg-surface-deep/80 px-4 py-6 backdrop-blur-xl transition-transform lg:translate-x-0`}>
+  return <aside className={`${open ? "translate-x-0" : "-translate-x-full"} glass-panel fixed inset-y-0 left-0 z-40 flex w-[220px] flex-col border-r px-4 py-6 transition-transform lg:translate-x-0`}>
     <div className="mb-8 flex items-center gap-3 px-2">
       <span className="grid size-10 place-items-center rounded-xl bg-primary text-primary-foreground"><Leaf className="size-5" /></span>
       <div><div className="font-extrabold text-primary">EcoWallet</div><div className="text-xs text-muted-foreground">Dashboard</div></div>
       <Button variant="ghost" size="icon" className="ml-auto lg:hidden" onClick={close} aria-label="Close menu"><X /></Button>
     </div>
-    <div className="mb-7 flex items-center gap-3 rounded-xl bg-card p-3">
+    <div className="glass-inset mb-7 flex items-center gap-3 rounded-xl p-3">
       <div className="grid size-10 place-items-center rounded-full bg-primary/15 text-primary"><UserRound /></div>
       <div><div className="text-sm font-bold">Sarah</div><div className="mt-0.5 text-[10px] font-semibold uppercase text-primary">Premium User</div></div>
     </div>
@@ -57,7 +57,7 @@ function Sidebar({ open, close }: { open: boolean; close: () => void }) {
       {nav.map(([label, Icon], i) => <a key={label} href={`#${label.toLowerCase()}`} onClick={close} className={`flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-semibold transition-colors ${i === 0 ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-card hover:text-foreground"}`}><Icon className="size-4" />{label}</a>)}
     </nav>
     <div className="mt-auto space-y-3 pt-8">
-      <div className="rounded-xl bg-background px-3 py-3 text-xs text-muted-foreground"><Leaf className="mr-1.5 inline size-4 text-primary" />CO₂ Saved: <b className="text-foreground">18.2 Kg</b></div>
+      <div className="glass-inset rounded-xl px-3 py-3 text-xs text-muted-foreground"><Leaf className="mr-1.5 inline size-4 text-primary" />CO₂ Saved: <b className="text-foreground">18.2 Kg</b></div>
       <Button className="w-full"><Plus />Add Transaction</Button>
       <SignOutButton />
     </div>
@@ -81,7 +81,7 @@ function Dashboard() {
     if (profile?.display_name) setName(profile.display_name);
   }); }, []);
 
-  return <div className="min-h-screen bg-background text-foreground">
+  return <div className="min-h-screen bg-transparent text-foreground">
     {menu && <button className="fixed inset-0 z-30 bg-background/80 lg:hidden" aria-label="Close menu backdrop" onClick={() => setMenu(false)} />}
     <Sidebar open={menu} close={() => setMenu(false)} />
     <div className="lg:ml-[220px] xl:mr-[236px]">
@@ -107,9 +107,9 @@ function Dashboard() {
           <div className="eco-card p-5">
             <div className="mb-3 flex items-center justify-between"><CardTitle>Recent Transactions</CardTitle><button className="text-xs font-bold text-primary">View all</button></div>
             <div className="divide-y divide-border">{transactions.map((t) => <div key={t.name} className="grid grid-cols-[auto_1fr_auto] items-center gap-3 py-3">
-              <span className="grid size-9 place-items-center rounded-lg bg-background text-primary"><t.icon className="size-4" /></span>
+              <span className="glass-inset grid size-9 place-items-center rounded-lg text-primary"><t.icon className="size-4" /></span>
               <div className="min-w-0"><p className="truncate text-sm font-semibold">{t.name}</p><p className="text-[11px] text-muted-foreground">{t.time}</p></div>
-              <div className="text-right"><p className={`text-sm font-bold ${t.income ? "text-positive" : "text-negative"}`}>{t.amount}</p><span className="rounded-full bg-background px-2 py-0.5 text-[10px] text-muted-foreground">CO₂ {t.co2}</span></div>
+              <div className="text-right"><p className={`text-sm font-bold ${t.income ? "text-positive" : "text-negative"}`}>{t.amount}</p><span className="glass-inset rounded-full px-2 py-0.5 text-[10px] text-muted-foreground">CO₂ {t.co2}</span></div>
             </div>)}</div>
           </div>
         </section>
@@ -119,7 +119,7 @@ function Dashboard() {
         </section>
 
         <section className="eco-card p-5">
-          <div className="flex flex-wrap items-center justify-between gap-4"><CardTitle>Carbon Footprint Insights</CardTitle><div className="flex rounded-lg bg-background p-1">{["This Month","This Week","This Year"].map((p) => <button key={p} onClick={() => setPeriod(p)} className={`rounded-md px-3 py-1.5 text-[11px] font-bold ${period === p ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}>{p}</button>)}</div></div>
+          <div className="flex flex-wrap items-center justify-between gap-4"><CardTitle>Carbon Footprint Insights</CardTitle><div className="glass-inset flex rounded-lg p-1">{["This Month","This Week","This Year"].map((p) => <button key={p} onClick={() => setPeriod(p)} className={`rounded-md px-3 py-1.5 text-[11px] font-bold ${period === p ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}>{p}</button>)}</div></div>
           <div className="mt-5 grid items-center gap-7 2xl:grid-cols-[1fr_240px]">
             <div><p className="mb-2 text-xs font-semibold text-muted-foreground">Monthly CO₂ Output</p><div className="h-52"><ResponsiveContainer width="100%" height="100%"><LineChart data={monthly} margin={{left:-18,right:8,top:8}}><CartesianGrid stroke="var(--border)" vertical={false}/><XAxis dataKey="day" tick={{fill:"var(--muted-foreground)",fontSize:10}} axisLine={false} tickLine={false}/><YAxis tick={{fill:"var(--muted-foreground)",fontSize:10}} axisLine={false} tickLine={false}/><Tooltip contentStyle={{background:"var(--surface-deep)",border:"1px solid var(--border)",borderRadius:8}} formatter={(value) => [`${value} Kg CO₂e`, "Output"]}/><Line type="monotone" dataKey="kg" stroke="var(--primary)" strokeWidth={3} dot={false} activeDot={{r:5,fill:"var(--primary)"}}/></LineChart></ResponsiveContainer></div></div>
             <div><p className="mb-4 text-center text-xs font-semibold text-muted-foreground">Carbon Breakdown</p><div className="eco-donut relative mx-auto size-36 rounded-full"><div className="absolute inset-5 grid place-items-center rounded-full bg-card text-center"><div><b className="text-xl">126 kg</b><p className="text-[10px] text-muted-foreground">CO₂e</p></div></div></div><div className="mt-4 space-y-2 text-xs">{[["Transportation","bg-positive-soft","44%"],["Home","bg-primary","34%"],["Other","bg-warning","22%"]].map(([n,c,v]) => <div key={n} className="flex items-center"><i className={`mr-2 size-2 rounded-full ${c}`} /><span className="text-muted-foreground">{n}</span><b className="ml-auto">{v}</b></div>)}</div></div>
@@ -133,12 +133,12 @@ function Dashboard() {
 }
 
 function RightPanel() {
-  return <aside className="border-t border-border bg-surface-deep/80 p-4 backdrop-blur-xl xl:fixed xl:inset-y-0 xl:right-0 xl:w-[236px] xl:overflow-y-auto xl:border-l xl:border-t-0">
+  return <aside className="glass-panel border-t p-4 xl:fixed xl:inset-y-0 xl:right-0 xl:w-[236px] xl:overflow-y-auto xl:border-l xl:border-t-0">
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
       <section className="eco-card p-4"><div className="flex items-center justify-between"><CardTitle>My Carbon Goals</CardTitle><button className="text-[11px] font-bold text-primary">Edit Goal</button></div><div className="relative mx-auto mt-4 grid size-28 place-items-center"><svg className="absolute inset-0 size-full -rotate-90" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="var(--surface-deep)" strokeWidth="9"/><circle cx="60" cy="60" r="50" fill="none" stroke="var(--primary)" strokeWidth="9" strokeLinecap="round" strokeDasharray="314" strokeDashoffset="126"/></svg><div className="text-center"><b className="text-2xl">60%</b><p className="text-[9px] text-muted-foreground">of monthly target</p></div></div></section>
       <section className="eco-card p-4"><CardTitle>Eco-Tips</CardTitle><div className="mt-3 space-y-3">{["Choose public transport twice this week.","Unplug idle devices overnight.","Try one plant-based meal today."].map(t => <div key={t} className="flex gap-2 text-[11px] leading-relaxed text-muted-foreground"><Lightbulb className="mt-0.5 size-4 shrink-0 text-warning" />{t}</div>)}</div></section>
-      <section className="eco-card p-4 sm:col-span-2 xl:col-span-1"><CardTitle>Offset Your Impact</CardTitle><div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-1">{[["Amazon Reforestation Project","https://picsum.photos/seed/amazonforest/480/240"],["GreenWind Energy Project","https://picsum.photos/seed/windenergy/480/240"]].map(([title,img]) => <article key={title} className="overflow-hidden rounded-xl bg-background"><img src={img} alt="Environmental project" className="h-20 w-full object-cover"/><div className="p-3"><p className="min-h-8 text-[11px] font-bold leading-snug">{title}</p><Button size="sm" className="mt-2 w-full">Support</Button></div></article>)}</div></section>
-      <section className="eco-card p-4 sm:col-span-2 xl:col-span-1"><CardTitle>Your Eco Impact</CardTitle><div className="mt-3 grid grid-cols-2 gap-2"><div className="rounded-lg bg-background p-2 text-center"><Leaf className="mx-auto size-4 text-primary"/><p className="mt-1 text-[9px] text-muted-foreground">Trees Planted</p><b className="text-sm">15</b></div><div className="rounded-lg bg-background p-2 text-center"><Sparkles className="mx-auto size-4 text-primary"/><p className="mt-1 text-[9px] text-muted-foreground">CO₂ Offset</p><b className="text-sm">500 kg</b></div></div></section>
+      <section className="eco-card p-4 sm:col-span-2 xl:col-span-1"><CardTitle>Offset Your Impact</CardTitle><div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-1">{[["Amazon Reforestation Project","https://picsum.photos/seed/amazonforest/480/240"],["GreenWind Energy Project","https://picsum.photos/seed/windenergy/480/240"]].map(([title,img]) => <article key={title} className="glass-inset overflow-hidden rounded-xl"><img src={img} alt="Environmental project" className="h-20 w-full object-cover"/><div className="p-3"><p className="min-h-8 text-[11px] font-bold leading-snug">{title}</p><Button size="sm" className="mt-2 w-full">Support</Button></div></article>)}</div></section>
+      <section className="eco-card p-4 sm:col-span-2 xl:col-span-1"><CardTitle>Your Eco Impact</CardTitle><div className="mt-3 grid grid-cols-2 gap-2"><div className="glass-inset rounded-lg p-2 text-center"><Leaf className="mx-auto size-4 text-primary"/><p className="mt-1 text-[9px] text-muted-foreground">Trees Planted</p><b className="text-sm">15</b></div><div className="glass-inset rounded-lg p-2 text-center"><Sparkles className="mx-auto size-4 text-primary"/><p className="mt-1 text-[9px] text-muted-foreground">CO₂ Offset</p><b className="text-sm">500 kg</b></div></div></section>
     </div>
   </aside>;
 }
