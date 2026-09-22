@@ -43,7 +43,7 @@ const monthly = [
 ];
 
 function Sidebar({ open, close }: { open: boolean; close: () => void }) {
-  return <aside className={`${open ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-40 flex w-[220px] flex-col border-r border-border bg-surface-deep px-4 py-6 transition-transform lg:translate-x-0`}>
+  return <aside className={`${open ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-40 flex w-[220px] flex-col border-r border-border bg-surface-deep/80 px-4 py-6 backdrop-blur-xl transition-transform lg:translate-x-0`}>
     <div className="mb-8 flex items-center gap-3 px-2">
       <span className="grid size-10 place-items-center rounded-xl bg-primary text-primary-foreground"><Leaf className="size-5" /></span>
       <div><div className="font-extrabold text-primary">EcoWallet</div><div className="text-xs text-muted-foreground">Dashboard</div></div>
@@ -133,7 +133,7 @@ function Dashboard() {
 }
 
 function RightPanel() {
-  return <aside className="border-t border-border bg-surface-deep p-4 xl:fixed xl:inset-y-0 xl:right-0 xl:w-[236px] xl:overflow-y-auto xl:border-l xl:border-t-0">
+  return <aside className="border-t border-border bg-surface-deep/80 p-4 backdrop-blur-xl xl:fixed xl:inset-y-0 xl:right-0 xl:w-[236px] xl:overflow-y-auto xl:border-l xl:border-t-0">
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
       <section className="eco-card p-4"><div className="flex items-center justify-between"><CardTitle>My Carbon Goals</CardTitle><button className="text-[11px] font-bold text-primary">Edit Goal</button></div><div className="relative mx-auto mt-4 grid size-28 place-items-center"><svg className="absolute inset-0 size-full -rotate-90" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="var(--surface-deep)" strokeWidth="9"/><circle cx="60" cy="60" r="50" fill="none" stroke="var(--primary)" strokeWidth="9" strokeLinecap="round" strokeDasharray="314" strokeDashoffset="126"/></svg><div className="text-center"><b className="text-2xl">60%</b><p className="text-[9px] text-muted-foreground">of monthly target</p></div></div></section>
       <section className="eco-card p-4"><CardTitle>Eco-Tips</CardTitle><div className="mt-3 space-y-3">{["Choose public transport twice this week.","Unplug idle devices overnight.","Try one plant-based meal today."].map(t => <div key={t} className="flex gap-2 text-[11px] leading-relaxed text-muted-foreground"><Lightbulb className="mt-0.5 size-4 shrink-0 text-warning" />{t}</div>)}</div></section>
